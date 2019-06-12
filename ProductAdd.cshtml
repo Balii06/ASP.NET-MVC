@@ -1,0 +1,71 @@
+@model ImageFile_Upload.Models.Product
+
+@{
+    ViewBag.Title = "ProductAdd";
+    var Message = ViewBag.Message;
+  
+}
+<head>
+    <title></title>
+    <link href="~/Content/tailwind.min.css" rel="stylesheet" />     
+</head>
+<body>
+    @using (Html.BeginForm("ProductAdd","Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @if(Message != null)
+            {
+            <div role="alert">
+                <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                     Danger
+                </div>
+                <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                    <p>@Message</p>
+                </div>
+            </div>
+            }
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductName, new { @class = "control-label col-md-2" })
+                <div class=" col-md-2" >
+                    @Html.EditorFor(model => model.ProductName)
+                    @Html.ValidationMessageFor(model => model.ProductName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="file" id="picfile" /> <br /><br />
+                    @Html.ValidationMessageFor(model => model.Image)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pdf, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="file" id="pdffile" /> <br /><br />
+                    @Html.ValidationMessageFor(model => model.Pdf)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Upload/Update" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+</body>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
